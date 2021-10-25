@@ -1,7 +1,7 @@
 package agh.ics.oop;
 import java.util.Scanner;
 
-public class world {
+public class World {
     public static Direction[] strtotab(String arg){
         int c=0,i=0;
 
@@ -57,6 +57,8 @@ public class world {
 
     public static void main(String[] args) {
 
+        String[] tabs = new String[]{"r","l","left","7"};
+
 //        System.out.println("Start");
 //        Scanner thingdo = new Scanner(System.in);
 //        String str = thingdo.nextLine();
@@ -64,28 +66,26 @@ public class world {
 //        run(newtab);
 //        System.out.println("Stop");
 
-        Vector2d v1 = new Vector2d(1,1);
-        Vector2d v2 = new Vector2d(2,2);
-        Vector2d v3 = new Vector2d(2,3);
-
+//        Vector2d v1 = new Vector2d(1,1);
+//        Vector2d v2 = new Vector2d(2,2);
+//        Vector2d v3 = new Vector2d(2,3);
 //        if(u.precedes(v)) System.out.println("es");
 //        else System.out.println("noes");
-//
-//        v.toString();
-//        u.toString();
-
 //        Vector2d position1 = new Vector2d(1,2);
 //        System.out.println(position1);
 //        Vector2d position2 = new Vector2d(-2,1);
 //        System.out.println(position2);
 //        System.out.println(position1.add(position2));
 
-//        MapDirection polnoc = MapDirection.NORTH;
-//        System.out.println(polnoc.toString());
-//        System.out.println(polnoc.next());
-//        System.out.println(polnoc.previous());
-//        System.out.println(polnoc.toUnitVector());
+        Animal lion = new Animal();
+        System.out.println(lion.toString());
 
+        OptionsParser parser = new OptionsParser();
+        MoveDirection[] tablica = parser.parse(tabs);
 
+        for(MoveDirection q : tablica ) {
+            lion.move(q);
+            System.out.println(lion.toString());
+        }
     }
 }
