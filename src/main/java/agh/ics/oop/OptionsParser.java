@@ -23,5 +23,4 @@ public class OptionsParser {
         }
         return tab;
     }
-
 }

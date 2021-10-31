@@ -23,5 +23,13 @@ public class Animal {
             case RIGHT -> orientation=orientation.next();
         }
     }
+
+    public Vector2d getPosition() {
+        return position;
+    }
+
+    public MapDirection getOrientation() {
+        return orientation;
+    }
 }
 
