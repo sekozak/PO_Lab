@@ -2,23 +2,35 @@ package agh.ics.oop;
 
 
 public class Animal {
-    private Vector2d position = new Vector2d(2,2);
-    private MapDirection orientation = MapDirection.NORTH;
+    private Vector2d position;
+    private MapDirection orientation;
+    private IWorldMap map;
+    public Animal(IWorldMap map) {
+        this.position = new Vector2d(2,2);
+        this.orientation = MapDirection.NORTH;
+        this.map =map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition) {
+        this.position = initialPosition;
+        this.orientation = MapDirection.NORTH;
+        this.map =map;
+    }
 
     @Override
     public String toString() {
-        return "Animal{" + "position=" + position + ", orientation=" + orientation + '}';
+        return this.orientation.toString();
     }
 
-    public Vector2d border(Vector2d x, Vector2d y){
-        if(y.precedes(new Vector2d(4,4)) && y.follows(new Vector2d(0,0)) ) return y;
-        return x;
-    }
 
     public void move(MoveDirection direction){
         switch (direction) {
-            case FORWARD -> position = border( position , position.add(orientation.toUnitVector()) );
-            case BACKWARD -> position = border( position , position.subtract(orientation.toUnitVector()) );
+            case FORWARD -> {
+                if( map.canMoveTo(position.add(orientation.toUnitVector())) ) position=position.add(orientation.toUnitVector());
+            }
+            case BACKWARD -> {
+                if( map.canMoveTo(position.subtract(orientation.toUnitVector())) ) position=position.subtract(orientation.toUnitVector());
+            }
             case LEFT -> orientation=orientation.previous();
             case RIGHT -> orientation=orientation.next();
         }

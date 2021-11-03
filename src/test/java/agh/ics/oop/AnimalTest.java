@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalTest {
+    IWorldMap map = new RectangularMap(4,4);
 
     @Test
     void position() {
-        Animal dog = new Animal();
+        Animal dog = new Animal(map);
         assertEquals(new Vector2d(2,2), dog.getPosition());
         dog.move(MoveDirection.FORWARD);
         assertEquals(new Vector2d(2,3), dog.getPosition());
@@ -25,7 +26,7 @@ class AnimalTest {
 
     @Test
     void orientation() {
-        Animal cat = new Animal();
+        Animal cat = new Animal(map);
         assertEquals(MapDirection.NORTH, cat.getOrientation());
         cat.move(MoveDirection.LEFT);
         assertEquals(MapDirection.WEST, cat.getOrientation());
@@ -38,7 +39,7 @@ class AnimalTest {
 
     @Test
     void border() {
-        Animal dog = new Animal();
+        Animal dog = new Animal(map);
         assertEquals(new Vector2d(2,2), dog.getPosition());
         dog.move(MoveDirection.FORWARD);//(2,3)
         dog.move(MoveDirection.FORWARD);//(2,4)

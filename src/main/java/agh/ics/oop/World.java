@@ -1,29 +1,26 @@
 package agh.ics.oop;
-import java.util.Scanner;
+import java.util.Objects;
 
 public class World {
-    public static Direction[] strtotab(String arg){
+    public static Direction[] strtotab(String[] arg){
         int c=0,i=0;
 
-        char[] charArray = new char[arg.length()];
-        arg.getChars(0, arg.length(), charArray, 0);
-
-        for( char q : charArray){
-            if(q=='f' || q=='b' || q=='r' || q=='l') c++;
+        for( String q : arg){
+            if(q.equals("f") || q.equals("b") || q.equals("r") || q.equals("l")) c++;
         }
         Direction[] newtab = new Direction[c];
-        for( char q : charArray){
+        for( String q : arg){
             switch(q){
-                case 'f':
+                case "f":
                     newtab[i]=Direction.FORWARD;
                     break;
-                case 'b':
+                case "b":
                     newtab[i]=Direction.BACKWARD;
                     break;
-                case 'r':
+                case "r":
                     newtab[i]=Direction.RIGHT;
                     break;
-                case 'l':
+                case "l":
                     newtab[i]=Direction.LEFT;
                     break;
                 default: i--;
@@ -57,13 +54,9 @@ public class World {
 
     public static void main(String[] args) {
 
-        String[] tabs = new String[]{"r","l","left","7"};
 
-//        System.out.println("Start");
-//        Scanner thingdo = new Scanner(System.in);
-//        String str = thingdo.nextLine();
-//        Direction[] newtab=strtotab(str);
-//        run(newtab);
+//        Direction[] tab= strtotab(args);
+//        run(tab);
 //        System.out.println("Stop");
 
 //        Vector2d v1 = new Vector2d(1,1);
@@ -77,15 +70,22 @@ public class World {
 //        System.out.println(position2);
 //        System.out.println(position1.add(position2));
 
-        Animal lion = new Animal();
-        System.out.println(lion.toString());
+//        Animal lion = new Animal();
+//        System.out.println(lion.toString());
+//
+//        OptionsParser parser = new OptionsParser();
+//        MoveDirection[] tablica = parser.parse(tabs);
+//
+//        for(MoveDirection q : tablica ) {
+//            lion.move(q);
+//            System.out.println(lion.toString());
+//        }
 
-        OptionsParser parser = new OptionsParser();
-        MoveDirection[] tablica = parser.parse(tabs);
+        MoveDirection[] directions = new OptionsParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
 
-        for(MoveDirection q : tablica ) {
-            lion.move(q);
-            System.out.println(lion.toString());
-        }
     }
 }
