@@ -6,6 +6,7 @@ import java.util.List;
 public class RectangularMap implements IWorldMap {
     private final int width;
     private final int height;
+    public static Vector2d VECTOR00 = new Vector2d(0, 0);
     List<Animal>  animals;
 
 
@@ -17,12 +18,13 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return position.precedes(new Vector2d(this.width, this.height)) && position.follows(new Vector2d(0, 0)) && !isOccupied(position);
+        return position.precedes(new Vector2d(this.width, this.height)) && position.follows(VECTOR00) && !isOccupied(position);
     }
 
     @Override
     public boolean place(Animal animal) {
-        if ( isOccupied(animal.getPosition()) ) return false;
+        Vector2d q = animal.getPosition();
+        if ( isOccupied(q) || !q.precedes(new Vector2d(this.width, this.height)) || !q.follows(VECTOR00) ) return false;
         animals.add(animal);
         return true;
     }
@@ -45,6 +47,6 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public String toString() {
-        return new MapVisualizer(this).draw(new Vector2d(0,0), new Vector2d(width, height));
+        return new MapVisualizer(this).draw(VECTOR00, new Vector2d(width, height));
     }
 }

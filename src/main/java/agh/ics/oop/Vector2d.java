@@ -25,16 +25,14 @@ public class Vector2d {
     }
 
     public Vector2d upperRight(Vector2d other){
-        int a,b;
-        a = Math.max(this.x, other.x);
-        b = Math.max(this.y, other.y);
+        int a = Math.max(this.x, other.x);
+        int b = Math.max(this.y, other.y);
         return new Vector2d(a,b);
     }
 
     public Vector2d lowerLeft(Vector2d other){
-        int a,b;
-        a = Math.min(this.x, other.x);
-        b = Math.min(this.y, other.y);
+        int a = Math.min(this.x, other.x);
+        int b = Math.min(this.y, other.y);
         return new Vector2d(a,b);
     }
 

@@ -5,16 +5,17 @@ public class Animal {
     private Vector2d position;
     private MapDirection orientation;
     private IWorldMap map;
+
     public Animal(IWorldMap map) {
         this.position = new Vector2d(2,2);
         this.orientation = MapDirection.NORTH;
-        this.map =map;
+        this.map = map;
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
         this.position = initialPosition;
         this.orientation = MapDirection.NORTH;
-        this.map =map;
+        this.map = map;
     }
 
     @Override
