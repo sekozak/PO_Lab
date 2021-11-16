@@ -2,6 +2,9 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static java.lang.Math.sqrt;
 
 class SimulationEngine implements IEngine {
     private MoveDirection[] directions;
@@ -14,6 +17,8 @@ class SimulationEngine implements IEngine {
         this.map = map;
         this.positions = tab2;
     }
+
+
 
     public void addanimal() {
         for (Vector2d q : positions){
@@ -34,6 +39,7 @@ class SimulationEngine implements IEngine {
             animals.get(i % len).move(q);
             i++;
         }
+
         System.out.print(map);
     }
 }
