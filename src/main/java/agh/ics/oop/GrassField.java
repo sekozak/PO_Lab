@@ -9,27 +9,41 @@ import static java.lang.Math.sqrt;
 public class GrassField extends AbstractWorldMap{
     private final int fields;
     public static Vector2d VECTOR00 = new Vector2d(0, 0);
-    List<Grass> grass;
+    private final List<Grass> grass;
 
 
     public GrassField(int fields) {
         this.fields = fields ;
         this.grass = new ArrayList<>();
-        this.ll = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
-        this.ur = new Vector2d(0,0);
     }
 
 
-    public void border(Vector2d q){
+    public void border(Vector2d q ){
         if ( !q.precedes(ur) ) ur = q.upperRight(ur);
         if ( !q.follows(ll) ) ll = q.lowerLeft(ll);
+    }
+
+    public void dynamicborder(){
+        ll = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+        ur = new Vector2d(0,0);
+        for (Animal a : animals){
+            border( a.getPosition() );
+        }
+        for (Grass g : grass){
+            border( g.getPosition() );
+        }
+    }
+
+    @Override
+    public String toString() {
+        dynamicborder();
+        return super.toString();
     }
 
 
     @Override
     public boolean canMoveTo(Vector2d position) {
         if(!position.follows(VECTOR00)) return false;
-        border(position);
         return !(objectAt(position) instanceof Animal);
     }
 
@@ -38,7 +52,6 @@ public class GrassField extends AbstractWorldMap{
         Vector2d q = animal.getPosition();
         if ( objectAt(q) instanceof Animal || !q.follows(VECTOR00) ) return false;
         animals.add(animal);
-        border( q );
         return true;
     }
 
@@ -47,7 +60,6 @@ public class GrassField extends AbstractWorldMap{
         Vector2d q = grass.getPosition();
         if ( isOccupied(q) || !q.follows(VECTOR00) ) return false;
         this.grass.add(grass);
-        border( q );
         return true;
     }
 
