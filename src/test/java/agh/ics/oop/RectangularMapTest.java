@@ -29,12 +29,9 @@ class RectangularMapTest {
     void place() {
         Animal dog1 = new Animal(map,v1);
         Animal dog2 = new Animal(map,v2);
-        Animal dog3 = new Animal(map,v3);
 
         assertTrue(map.place(dog1));
-        assertFalse(map.place(dog1));
         assertTrue(map.place(dog2));
-        assertFalse(map.place(dog3));
     }
 
     @Test

@@ -8,34 +8,13 @@ public class GrassField extends AbstractWorldMap{
     private final int fields;
     public static Vector2d VECTOR00 = new Vector2d(0, 0);
     private final Map<Vector2d, Grass> grassmap;
+    private final MapBoundary borders;
 
 
     public GrassField(int fields) {
         this.fields = fields ;
         this.grassmap = new HashMap<>();
-    }
-
-
-    public void border(Vector2d q ){
-        if ( !q.precedes(ur) ) ur = q.upperRight(ur);
-        if ( !q.follows(ll) ) ll = q.lowerLeft(ll);
-    }
-
-    public void dynamicborder(){
-        ll = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
-        ur = new Vector2d(0,0);
-        for (Vector2d a : animalsmap.keySet()){
-            border( a );
-        }
-        for (Vector2d g : grassmap.keySet()){
-            border( g );
-        }
-    }
-
-    @Override
-    public String toString() {
-        dynamicborder();
-        return super.toString();
+        this.borders = new MapBoundary();
     }
 
 
@@ -48,9 +27,11 @@ public class GrassField extends AbstractWorldMap{
     @Override
     public boolean place(Animal animal) {
         Vector2d q = animal.getPosition();
-        if ( objectAt(q) instanceof Animal || !q.follows(VECTOR00) ) return false;
+        if ( objectAt(q) instanceof Animal || !q.follows(VECTOR00) ) throw new IllegalArgumentException(q + " already occupied by other animal");
         animalsmap.put(q,animal);
+        borders.addAnimal(animal);
         animal.addObserver(this);
+        animal.addObserver(this.borders);
         return true;
     }
 
@@ -79,7 +60,6 @@ public class GrassField extends AbstractWorldMap{
     }
 
 
-
     public void plantgrass(){
         Random generator = new Random();
         for ( int i=0; i<fields; i++) {
@@ -90,5 +70,11 @@ public class GrassField extends AbstractWorldMap{
                 i--;
             }
         }
+        borders.grassborder(grassmap);
+    }
+
+    @Override
+    public String toString() {
+        return new MapVisualizer(this).draw(borders.lowLeft(),borders.uppRight());
     }
 }

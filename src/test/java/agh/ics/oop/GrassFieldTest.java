@@ -34,10 +34,8 @@ class GrassFieldTest {
         Animal dog3 = new Animal(map,v3);
 
         assertTrue(map.place(new Grass(v1)));
-        assertFalse(map.place(new Grass(v1)));
 
         assertTrue(map.place(dog1));
-        assertFalse(map.place(dog1));
         assertTrue(map.place(dog2));
         assertTrue(map.place(dog3));
     }

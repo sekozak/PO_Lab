@@ -6,7 +6,6 @@ import java.util.Map;
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     protected Map<Vector2d, Animal> animalsmap = new HashMap<>();
 
-
     protected Vector2d ll;
     protected Vector2d ur;
 
@@ -20,7 +19,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     @Override
     public boolean place(Animal animal) {
         Vector2d q = animal.getPosition();
-        if ( isOccupied(q) || !q.precedes(ur) || !q.follows(ll) ) return false;
+        if ( isOccupied(q) || !q.precedes(ur) || !q.follows(ll) ) throw new IllegalArgumentException(q + " already occupied or not in map");
         animalsmap.put(q,animal);
         animal.addObserver(this);
         return true;
